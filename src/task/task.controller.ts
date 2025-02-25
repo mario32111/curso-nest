@@ -7,11 +7,31 @@ import { TaskService } from './task.service';
 export class TaskController {
     constructor(private taskService: TaskService) { }
 
+    //peticion post con servicios, interfaces y dto 
     //ejemplo de como se puede hacer un post con un body con los datos que se necesitan
     @Post('t6')
     //para que esto funcione se debe especificar que el id viene dentro de param
     createTask6(@Body() taskDTO: TaskDTO) {
         return this.taskService.create(taskDTO);
+    }
+    @Get()
+    findAll() {
+        return this.taskService.findAll();
+    }
+
+    @Get(':id')
+    findOne(@Param  ('id') id: string) {
+        return this.taskService.findOne(id);
+    }
+
+    @Put(':id')
+    update(@Param('id') id: string, @Body() taskDTO: TaskDTO) {
+        return this.taskService.update(id, taskDTO);
+    }
+
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return this.taskService.remove(id);
     }
 
 
@@ -22,6 +42,8 @@ export class TaskController {
 
 
 
+
+    //ejemplos
     @Post('t1/:id/description/:description/isDone/:isDone')
     //para que esto funcione se debe especificar que el id viene dentro de param
     //dentro de los parametros se puede especificar el tipo de dato que se espera
