@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Put, Patch, Delete, Param, Query, Body, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Req, Put, Patch, Delete, Param, Query, Body, ValidationPipe, UsePipes, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { Request } from 'express';
 import { TaskDTO } from './dto/task.dto';
 import { TaskService } from './task.service';
@@ -20,7 +20,7 @@ export class TaskController {
     }
 
     @Get(':id')
-    findOne(@Param  ('id') id: string) {
+    findOne(@Param('id') id: string) {
         return this.taskService.findOne(id);
     }
 
@@ -43,6 +43,23 @@ export class TaskController {
         return this.taskService.create(taskDTO);
     }
 
+    //peticion con validacion
+    @Post('t8')
+    //para que esto funcione se debe especificar que el id viene dentro de param
+    createTask8(@Body() taskDTO: TaskDTO) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject('Error en la peticion')
+            }, 2000)
+        }
+        );
+
+    //este error es con HttpException
+    //throw new HttpException('Error en la peticion', HttpStatus.BAD_REQUEST);
+
+    //este error es con BadRequestException
+    //throw new BadRequestException('Error en la peticion');
+    }
 
 
 
