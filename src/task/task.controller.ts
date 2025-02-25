@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Put, Patch, Delete, Param, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Req, Put, Patch, Delete, Param, Query, Body, ValidationPipe, UsePipes } from '@nestjs/common';
 import { Request } from 'express';
 import { TaskDTO } from './dto/task.dto';
 import { TaskService } from './task.service';
@@ -34,6 +34,14 @@ export class TaskController {
         return this.taskService.remove(id);
     }
 
+
+
+    //peticion con validacion
+    @Post('t7')
+    //para que esto funcione se debe especificar que el id viene dentro de param
+    createTask7(@Body() taskDTO: TaskDTO) {
+        return this.taskService.create(taskDTO);
+    }
 
 
 
